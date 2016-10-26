@@ -1,0 +1,60 @@
+/*
+ * EasyMail theme
+ */
+body {
+    /*padding-top: 110px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+	font-family: 'Open Sans', sans-serif !important;
+}
+
+/* Navigation bar */
+.navbar {
+    border-top: 10px solid #0090b4;
+	border-bottom: 1px solid #dee0df;
+	min-height: 80px;
+    background: #fff;
+}
+
+.navbar a.brand {
+    border-right: 1px solid #dee0df;
+    color: #e74430;
+    font-size: 18px;
+    float: left;
+    line-height: 80px;
+    padding: 0 30px;
+}
+
+.navbar-nav {
+    margin: 14.5px -15px;
+    font-size: 16px;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: #fff;
+    color: #5ac5df;
+}
+
+/* Footer */
+footer {
+    background: #fafafa;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+ul.social-buttons li a {
+    display: block;
+    background-color: #5a5a5a;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    color: white;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+ul.social-buttons li a:hover {
+    background-color: #848484;
+}
