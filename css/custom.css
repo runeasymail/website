@@ -40,6 +40,15 @@ footer {
     text-align: center;
 }
 
+ul.navigation a {
+    color: #636363;
+}
+
+ul.navigation a:hover {
+    color: #5ac5df;
+    text-decoration: none;
+}
+
 ul.social-buttons li a {
     display: block;
     background-color: #5a5a5a;
