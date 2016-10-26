@@ -6,6 +6,15 @@ body {
 	font-family: 'Open Sans', sans-serif !important;
 }
 
+a {
+    color: #5ac5df;
+}
+
+a:hover {
+    color: #0090b4;
+    text-decoration: none;
+}
+
 /* Navigation bar */
 .navbar {
     border-top: 10px solid #0090b4;
@@ -28,10 +37,38 @@ body {
     font-size: 16px;
 }
 
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
     background-color: #fff;
     color: #5ac5df;
 }
+
+/* Sidebar menu */
+#sidebar-menu {
+    border-right: 1px solid #dee0df;
+}
+
+#sidebar-menu .lead {
+    font-size: 14px;
+    margin-bottom: 0;
+    border-bottom: 1px dashed #c1c1c1;
+    padding-bottom: 7px;
+    font-weight: 400;
+}
+
+#sidebar-menu a.list-group-item {
+    border: 0;
+    color: #5ac5df;
+    background: #fff;
+    padding: 7px 0px 0px 0px;
+}
+
+#sidebar-menu a.list-group-item:hover {
+    color: #0090b4;
+}
+
+/* Page */
+
 
 /* Footer */
 footer {
