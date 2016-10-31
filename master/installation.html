@@ -105,6 +105,7 @@
                             <ol><a href="#cname-records"><span class="n-sign">#</span> CNAME records</a></ol>                            
 							<ol><a href="#spf-record"><span class="n-sign">#</span> SPF record</a></ol>                            
 							<ol><a href="#dkim-configuration"><span class="n-sign">#</span> DKIM configuration</a></ol>                            
+							<ol><a href="#ssl-certificate"><span class="n-sign">#</span> SSL certificate</a></ol>                            
                         </li>
 						<li><a href="#roundcube"><span class="n-sign">#</span> RoundCube</a></li>
 						<li><a href="#add-email-accounts"><span class="n-sign">#</span> Add email accounts</a></li>
@@ -286,6 +287,9 @@ Text: "v=spf1 a:mail.example.com ~all"</code></pre></figure>
 				<h3 id="dkim-configuration">DKIM configuration</h3>
 				<p>For the configuration of DKIM follow this tutorial <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy" target="_blank" rel="nofollow">DKIM Configuration</a>.</p>
 				
+				<h3 id="ssl-certificate">SSL certificate</h3>
+				<p>During the installation of EasyMail you have been asked to provide path to the SSL certificates. If you want to change the certificates, simply replace the ones and restart your web service.</p>
+							
 				<h2 id="roundcube"><span class="n-sign">#</span> RoundCube</h2>
 				<p>“EasyMail” comes with a nice mail client “RoundCube”. In order to access it go to your web browser and type the following:</p>
 				<figure><pre><code>mail.example.com:44380</code></pre></figure>
@@ -418,6 +422,18 @@ MAIL_ENCRYPTION=tls</code></pre></figure>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
+	
+	<!-- GA -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-86498991-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
 </body>
 
 </html>

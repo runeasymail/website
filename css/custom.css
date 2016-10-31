@@ -45,6 +45,23 @@ nav.navbar {
 			color: #5ac5df;
 		}
 		
+.navbar-default .navbar-toggle {
+    background-color: #0090b4;
+	border-color: #0095bb;
+}
+	
+	.navbar-default .navbar-toggle:hover {
+		background-color: #fff;
+	}
+
+		.navbar-default .navbar-toggle .icon-bar {
+			background-color: #fff;
+		}
+	
+		.navbar-default .navbar-toggle:hover .icon-bar {
+			background-color: #0090b4;
+		}
+
 /* Switcher nav */
 .switcher {
 	padding: 0 15px;
