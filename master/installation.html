@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Easy mail sending">
+    <meta name="author" content="EasyMail">
+    <link rel="icon" href="../resources/favicon.ico">
+
+    <title>Easy mail sending - Installation</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font awesome -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" id="navigation">
+        <a href="/" class="brand nav-block">
+            <img src="../resources/easymail-logo.png" width="200"/>
+        </a>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><a href="/master/installation">Documentation</a></li>
+                    <li><a href="/history">History</a></li>
+                    <li><a href="/faqs">FAQs</a></li>
+					<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://github.com/runeasymail/easymail" target="_blank">Github</a></li>
+                            <li role="separator" class="divider"></li>                            
+                            <li><a href="https://runeasymail.slack.com/" target="_blank">Slack</a></li>  
+							<li><a href="https://twitter.com/RunEasyMail" target="_blank">Twitter</a></li>  							
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+		<div class="row">
+			<!-- Single button -->
+			<div class="btn-group switcher">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Master <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="/master/installation">Master</a></li>
+				</ul>
+			</div>
+		</div>
+        <div class="row">
+            <div class="col-md-3" id="sidebar-menu">
+                <p class="lead">Prologue</p>
+                <div class="list-group">
+                    <a href="https://github.com/runeasymail/easymail/releases" target="_blank" class="list-group-item">Release Notes</a>
+                    <a href="/master/contribution-guide" class="list-group-item">Contribution Guide</a>
+                </div>
+
+                <p class="lead">Getting Started</p>
+                <div class="list-group">
+                    <a href="/master/installation" class="list-group-item active">Installation</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="page-header">
+                    <h1>Installation</h1>
+
+                    <ul class="list-unstyled list-content">
+                        <li><a href="#introduction"><span class="n-sign">#</span> Introduction</a></li>
+						<li><a href="#dependencies"><span class="n-sign">#</span> Dependencies</a></li>
+						<li><a href="#server-requirements"><span class="n-sign">#</span> Server Requirements</a></li>
+						<li><a href="#build-on-docker"><span class="n-sign">#</span> Build on Docker (optional)</a></li>
+						<li><a href="#installing-easymail"><span class="n-sign">#</span> Installing EasyMail</a></li>
+						<li><a href="#configuration"><span class="n-sign">#</span> Configuration</a></li>
+                        <li>
+							<ol><a href="#mx-record"><span class="n-sign">#</span> MX record</a></ol>
+                            <ol><a href="#cname-records"><span class="n-sign">#</span> CNAME records</a></ol>                            
+							<ol><a href="#spf-record"><span class="n-sign">#</span> SPF record</a></ol>                            
+							<ol><a href="#dkim-configuration"><span class="n-sign">#</span> DKIM configuration</a></ol>                            
+                        </li>
+						<li><a href="#roundcube"><span class="n-sign">#</span> RoundCube</a></li>
+						<li><a href="#add-email-accounts"><span class="n-sign">#</span> Add email accounts</a></li>
+						<li><a href="#additional"><span class="n-sign">#</span> Additional</a></li>
+						<li>
+							<ol><a href="#autostart-the-service-after-reboot"><span class="n-sign">#</span> Autostart the service after reboot</a></ol>
+                            <ol><a href="#forward-emails"><span class="n-sign">#</span> Forward emails</a></ol>
+							<ol><a href="#transactional-emails"><span class="n-sign">#</span> Transactional emails</a></ol>
+                        </li>
+                    </ul>
+                </div>
+				
+				<h2 id="introduction"><span class="n-sign">#</span> Introduction</h2>
+				<p>Below are described all steps required for the configuration of the mail server. Before we start a few clarifications are required. 
+				For the installation and configurations below we use two domain names. One for the mail server and a second one for the email domain 
+				which will be used for the email accounts <i>(for example: <a href="mailto:contacts@example.com">contacts@example.com</a>)</i>. 
+				For the mail server we will use:</p>
+				
+				<figure><pre><code>mail.example.com</code></pre></figure>
+				
+				<p>And for the email domain name:</p>
+				
+				<figure><pre><code>example.com</code></pre></figure>
+				
+				<p>Feel free to change them to your own domains or sub domains. But keep in mind something very important. The two domains must be 
+				registered and verified. Otherwise you take the risk your server or IP address to be blocked.</p>
+				
+				<h2 id="dependencies"><span class="n-sign">#</span> Dependencies</h2>
+				<p>Below are listed dependencies which will be installed automatically during the installation of “EasyMail”:</p>
+				<ul>
+					<li>Dovecot</li>
+					<li>Postfix</li>
+					<li>Roundcube</li>
+					<li>SpamAssassin</li>
+					<li>Nginx</li>
+					<li>MySQL</li>
+				</ul>
+				
+				<h2 id="server-requirements"><span class="n-sign">#</span> Server Requirements</h2>
+				<ul>
+					<li>Dedicated machine or Virtual private server <i>(VPS)</i> and parametres not lower than:
+						<ul>
+							<li>RAM (or RAM + SWAP) >= 1GB</li>
+							<li>HDD/SSD 10 GB.</li>
+						</ul>
+					</li>
+					<li>Fresh installed Debian or Ubuntu server with 14.04 or newer.</li>
+				</ul>
+				
+				<h2 id="build-on-docker"><span class="n-sign">#</span> Build on Docker (optional)</h2>
+				<p>There are cases when we may want to build the mail server on Docker. To do so, follow the steps below.</p>
+				<p>Install docker if you still don't have it on your machine. For further information check <a target="_blank" rel="nofollow" href="https://docs.docker.com/engine/installation/">Docker installation</a>.</p>
+				<p>For this tutorial we will use a docker image of Ubuntu 14.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "mail.example.com" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<p>Further explanations are required. The command above will build a new container <i>(named “easymail”)</i> 
+				with a new fresh installation of Ubuntu 14.04 and mapping for the following ports: 110, 25, 995, 80, 443, 587, 993 and 143.</p>
+				<p>For the proper work of the mail server, it is important each of those ports to be freed and not occupied by the services running on your physical machine. Each of them is used for:</p>
+				<figure><pre><code>110 - POP3
+25 - SMTP (Non-Exctypted) used by Postfix
+995 - POP3 with SSL
+80 - web service Nginx
+443 - web service Nginx with SSL
+587 - SMTP (StartTLS)
+993 - IMAP (SSL)
+143 - IMAP (StartTLS)
+465 - SMTP (SSL)</code></pre></figure>
+				<p>If any of the ports above is already occupied you will have to use another one or to free them. 
+				For example, if you have a web services installed on your physical machine, you most probably use ports 80 and 443, 
+				so you will have to use different ports in order to finish the installation above. For example you can use 8080 
+				instead of 80 and 44380 instead of 443. The command above will change:</p>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "mail.example.com" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<p>As you may have noticed, during the installation of the container we have mapped the directory: /etc/ssl/certs/. 
+				This is the directory which contains the SSL certificates for the domain name of the mail server - mail.example.com. 
+				We can use the SSL certificates to encrypt the communication with the mail server or we can skip this option. 
+				This is entirely an optional step.</p>
+				<p>When the creation of the container completes, you will be let inside the Docker container. Continue with the installation of “EasyMail”.</p>
+				
+				<h2 id="installing-easymail"><span class="n-sign">#</span> Installing EasyMail</h2>
+				<p>Execute the following commands:</p>
+				<figure><pre><code>apt-get update && apt-get install git nano -y</code></pre></figure>
+				<p>If you use Docker, you have to install git because the docker image above does not have it.</p>
+				<p>Clone the project “EasyMail” and start the script install.sh:</p>
+				<figure><pre><code>git clone https://github.com/runeasymail/easymail.git /easymail && bash /easymail/install.sh</code></pre></figure>
+				<p>During the installation you will be asked a few questions. Below you will find example answers which are applicable only for the current example.</p>
+				<figure><pre><code>Type hostname: mail.example.com
+Type admin's email password: iu34urc389fu349
+Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
+				<p>If you press “Yes”, you will be asked two additional questions addressed to the SSL certificates 
+				<i>(this step requires the ssl directory to be mapped during the creation of the docker container)</i>:</p>			
+				<figure><pre><code>[SSL] CA Bundle file path: /etc/ssl/certs/CERTIFICATE-NAME.crt
+[SSL] Private key file path: /etc/ssl/certs/CERTIFICATE-NAME.key</code></pre></figure>
+				<p>After the configuration of the SSL certificates:</p>
+				<figure><pre><code>Is this installation is on Docker? [N/y] y</code></pre></figure>
+				<p>At the end of the installation, the installation script will generate a random password for the MySQL database 
+				which will be displayed on the screen in additional to a few further steps important for the completion of 
+				the installation process <i>(we will review them below anyway)</i>. Please, write down the MySQL password. 
+				If you have missed to write it down, don’t worry, follow the additional steps below in order to restart it:</p>
+				<ul>
+					<li>Stop MySQL:</li>
+				</ul>
+				<figure><pre><code>sudo /etc/init.d/mysql stop</code></pre></figure>
+				<ul>
+					<li>Next we need to start MySQL in safe mode - that is to say, we will start MySQL but skip the user privileges table.</li>
+				</ul>
+				<figure><pre><code>sudo mysqld_safe --skip-grant-tables &</code></pre></figure>
+				<ul>
+					<li>Log in to MySQL:</li>
+				</ul>
+				<figure><pre><code>mysql -uroot</code></pre></figure>
+				<ul>
+					<li>Next, instruct MySQL which database to use:</li>
+				</ul>
+				<figure><pre><code>use mysql;</code></pre></figure>
+				<ul>
+					<li>Enter the new password for the root user as follows:</li>
+				</ul>
+				<figure><pre><code>update user set password=PASSWORD("mynewpassword") where User='root';</code></pre></figure>
+				<ul>
+					<li>and finally, flush the privileges:</li>
+				</ul>
+				<figure><pre><code>flush privileges;</code></pre></figure>
+				<ul>
+					<li>Quit and restart MySQL:</li>
+				</ul>
+				<figure><pre><code>quit
+
+sudo /etc/init.d/mysql stop
+sudo /etc/init.d/mysql start</code></pre></figure>
+				<p>When you finish the installation "EasyMail" will automatically start all services <i>(MySQL, Nginx, php5-fpm, Postfix, Dovecot and Spamassassin)</i>.</p>				
+				
+				<h2 id="configuration"><span class="n-sign">#</span> Configuration</h2>
+				<p>The next important step is to add MX, CNAME and SPF records and to install and configure DKIM 
+				for the domain name used for the emails accounts. The SPF record and DKIM are optional but advisable.</p>
+				
+				<h3 id="mx-record">MX record</h3>
+				<p>Steps:</p>
+				<ul>
+					<li>Go to the domain register of your domain names.</li>
+					<li>Add a new MX record for the domain you want to use for you emails. Example:</li>
+				</ul>
+				<figure><pre><code>Hostname: example.com
+Priority: 0</code></pre></figure>
+
+				<h3 id="cname-records">CNAME records</h3>
+				<p>The configuration of the CNAME is required if we want to configure our email address with a Desktop mail client. Steps:</p>
+				<ul>
+					<li>Go to the domain register of your domain names.</li>
+					<li>Add the following two CNAME records for the domain name of the maill server. Example:</li>
+				</ul>
+				<figure><pre><code>Name: autoconfig 
+Hostname: mail.example.com.</code></pre></figure>
+				<p>and</p>
+				<figure><pre><code>Name: autodiscover
+Hostname: mail.example.com.</code></pre></figure>
+				<p>With the help of these CNAMES, the mail server is able to generate the following XMLs:</p>
+				<p><a href="http://autoconfig.mail.example.com:80/mail/config-v1.1.xml" target="_blank" rel="nofollow">http://autoconfig.mail.example.com:80/mail/config-v1.1.xml</a></p>
+				<p><a href="http://autodiscover.mail.example.com:80/autodiscover/autodiscover.xml" target="_blank" rel="nofollow">http://autodiscover.mail.example.com:80/autodiscover/autodiscover.xml</a></p>
+				<p>They are used by the desktop mail clients for automatic configuration with your mail server. 
+				You can also use the information within the XML for other manual setups.</p>
+				<p>Please take into account that we can access the XML documents through port 80 but this port 
+				may vary depending on the configurations of your web service.</p>
+				
+				<h3 id="spf-record">SPF record</h3>
+				<p>It is up to you, how you will set up the SPF record but for the sake of clarity we will present a short example.</p>
+				<p>If you want to know more about how to add SPF records and the different configuration options 
+				just google for "add SPF record" or read this tutorial <a href="https://www.digitalocean.com/community/tutorials/how-to-use-an-spf-record-to-prevent-spoofing-improve-e-mail-reliability" target="_blank" rel="nofollow">SPF Record</a>.</p>
+				<p>Example:</p>
+				<ul>
+					<li>Go to the domain register of your domain names.</li>
+					<li>Add the following TXT record to the domain name used for the email accounts <i>(in our case this is example.com)</i>:</li>
+				</ul>
+				<figure><pre><code>Name:  @
+Text: "v=spf1 a:mail.example.com ~all"</code></pre></figure>
+				<p>Everyone who receives an email from an email account with domain name example.com <i>(for example: <a href="mailto:contact@example.com">contact@example.com</a>)</i> 
+				can check the SPF record of this domain and to see that it authorizes only the server with IP address recorded in 
+				the DNS A record of the mail server mail.example.com, to send emails. If somebody else try to send emails on behalf 
+				of example.com from a different server, this server most probably will go to the spam filters and permanently blocked.</p>
+				
+				<h3 id="dkim-configuration">DKIM configuration</h3>
+				<p>For the configuration of DKIM follow this tutorial <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy" target="_blank" rel="nofollow">DKIM Configuration</a>.</p>
+				
+				<h2 id="roundcube"><span class="n-sign">#</span> RoundCube</h2>
+				<p>“EasyMail” comes with a nice mail client “RoundCube”. In order to access it go to your web browser and type the following:</p>
+				<figure><pre><code>mail.example.com:44380</code></pre></figure>
+				<p>or</p>
+				<figure><pre><code>IP_ADDRESS_OF_THE_MAIL_SERVER:44380</code></pre></figure>
+				<p>Of course, you will need an email account to log in. Continue reading for further information how to add email accounts.</p>
+				<p>When you access your email account with RoundCube, you can change your password from “Settings” -> “Password”.</p>
+				
+				<h2 id="add-email-accounts"><span class="n-sign">#</span> Add email accounts</h2>
+				<p>All email accounts are stored in the MySQL database. The reason to store them in the database is for easy management. 
+				To add a new email account you will have to access the MySQL database <i>(remember, you will need the MySQL password)</i>. 
+				We will do that through the terminal.</p>
+				<ul>
+					<li>Log in to your physical machine and access the terminal of the Ubuntu container if you use Docker.</li>
+					<li>Log in to MySQL:</li>
+				</ul>
+				<figure><pre><code>mysql -u root -p</code></pre></figure>
+				<ul>
+					<li>List the databases:</li>
+				</ul>
+				<figure><pre><code>mysql> show databases;</code></pre></figure>
+				<p>The database used by “EasyMail” is “mailserver”.</p>
+				<ul>
+					<li>List all tables inside database “mailserver”.</li>
+				</ul>
+				<figure><pre><code>mysql> show tables in mailserver;</code></pre></figure>
+				<p>You will find four tables:</p>
+				<figure><pre><code>recipient_bcc
+virtual_aliases
+virtual_domains
+virtual_users</code></pre></figure>
+				<p>The name of the tables are chosen in accordance with Postfix standards for email management. 
+				Better understanding of Postfix email management will give you more clear idea of how to work with these tables. 
+				The table “virtual_users” contains all email accounts. We can list them:</p>
+				<figure><pre><code>mysql> select * from mailserver.virtual_users;</code></pre></figure>
+				<p>or we can add a new record. Please bear in mind that the password field is encrypted with openssl_encrypt enctyption.</p>
+				
+				<h2 id="additional"><span class="n-sign">#</span> Additional</h2>
+				<h3 id="autostart-the-service-after-reboot">Autostart the service after reboot</h3>
+				<p>"EasyMail" is configured to start all required services automatically if the machine reboots. 
+				This will save you some time because you don't have to start the services by yourself. We will review how this works.</p>
+				<ul>
+					<li>Go to:</li>
+				</ul>
+				<figure><pre><code>cd /</code></pre></figure>
+				<ul>
+					<li>List all files in the directory:</li>
+				</ul>
+				<figure><pre><code>ln -ls</code></pre></figure>
+				<ul>
+					<li>You will see the file "run.sh". Open it:</li>
+				</ul>
+				<figure><pre><code>nano run.sh</code></pre></figure>
+				<p>The file contains the following code:</p>
+				<figure><pre><code>service mysql start
+service nginx start
+service php5-fpm start
+/etc/init.d/postfix start
+/usr/sbin/dovecot
+service spamassassin start
+service opendkim start</code></pre></figure>
+				<p>These are the services which will be starter automatically if the machine reboots. 
+				That's all you need to know, "EasyMail" takes care for the rest.</p>
+				
+				<h3 id="forward-emails">Forward emails</h3>
+				<p>If you want to forward all incomming emails to another email:</p>
+				<ul>
+					<li>Go to the terminal.</li>
+					<li>Access mysql database.</li>
+					<li>Add a new record to table “recipient_bcc”.</li>
+				</ul>
+				<p>If you want to forward emails to Gmail, another option is to use Gmail SMTP client.</p>
+				
+				<h3 id="transactional-emails">Transactional emails</h3>
+				<p>The good thing about the current mail server is that it can be used to send transactional emails. 
+				For the configuration with an external client we can use:</p>
+				<figure><pre><code>Host: mail.example.com
+Username: contact@example.com
+SMTP Secure: tls
+Port: 587</code></pre></figure>
+				<p>Example for Laravel:</p>				
+				<figure><pre><code>MAIL_DRIVER=smtp
+MAIL_HOST=mail.example.com
+MAIL_PORT=587
+MAIL_USERNAME=contact@example.com
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls</code></pre></figure>
+
+				<br /><br /><br />
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+	<a href="#navigation" class="go-to-top"><i class="fa fa-arrow-circle-up fa-3x"></i></a>
+    <footer class="footer">
+        <div class="container">
+            <ul class="list-inline navigation">
+                <li>
+					<a href="/">Home</a>
+					| <a href="/master/installation">Documentation</a>
+					| <a href="/history">History</a>
+					| <a href="/faqs">FAQs</a>					
+					| <a href="https://github.com/runeasymail/easymail" target="_blank">Github</a>	
+					| <a href="https://runeasymail.slack.com/" target="_blank">Slack</a>
+                </li>
+            </ul>
+            <br />
+            <ul class="list-inline social-buttons">
+                <li>
+                    <a target="_blank" href="https://twitter.com/RunEasyMail"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://www.facebook.com/groups/runeasymail/"><i class="fa fa-facebook"></i></a>
+                </li>
+            </ul>
+            <br />
+            <p class="text-muted">Copyright &copy; EasyMail - Easy mail sending</p>
+        </div>
+    </footer>
+    <!-- /.container -->
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
+</html>
