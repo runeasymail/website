@@ -181,6 +181,18 @@ h2 span.n-sign {
 	}
 }
 
+.lead-left {
+	text-align: left;
+}
+
+ul.no-style {
+	list-style: none;
+}
+
+ul.aligned-left {
+	text-align: left;
+}
+	
 	/* Callout */
 .callout.rule {
     border-bottom: 1px solid #dee0df;
