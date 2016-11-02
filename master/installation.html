@@ -97,7 +97,7 @@
                         <li><a href="#introduction"><span class="n-sign">#</span> Introduction</a></li>
 						<li><a href="#dependencies"><span class="n-sign">#</span> Dependencies</a></li>
 						<li><a href="#server-requirements"><span class="n-sign">#</span> Server Requirements</a></li>
-						<li><a href="#build-on-docker"><span class="n-sign">#</span> Build on Docker (optional)</a></li>
+						<li><a href="#prepare-docker"><span class="n-sign">#</span> Prepare Docker (optional)</a></li>
 						<li><a href="#installing-easymail"><span class="n-sign">#</span> Installing EasyMail</a></li>
 						<li><a href="#configuration"><span class="n-sign">#</span> Configuration</a></li>
                         <li>
@@ -119,22 +119,22 @@
                 </div>
 				
 				<h2 id="introduction"><span class="n-sign">#</span> Introduction</h2>
-				<p>Below are described all steps required for the configuration of the mail server. Before we start a few clarifications are required. 
-				For the installation and configurations below we use two domain names. One for the mail server and a second one for the email domain 
+				<p>Before we start we will have to make a few clarifications. 
+				For the installation and configurations below we use two domain names, one for the mail server and one for the domain name 
 				which will be used for the email accounts <i>(for example: <a href="mailto:contacts@example.com">contacts@example.com</a>)</i>. 
 				For the mail server we will use:</p>
 				
-				<figure><pre><code>mail.example.com</code></pre></figure>
+				<figure><pre><code><span class="red">mail.example.com</span></code></pre></figure>
 				
-				<p>And for the email domain name:</p>
+				<p>and for the email domain name:</p>
 				
-				<figure><pre><code>example.com</code></pre></figure>
+				<figure><pre><code><span class="red">example.com</span></code></pre></figure>
 				
-				<p>Feel free to change them to your own domains or sub domains. But keep in mind something very important. The two domains must be 
-				registered and verified. Otherwise you take the risk your server or IP address to be blocked.</p>
+				<p>Feel free to change them to your own domains or sub domains, but keep in mind something very important. The two domains must be 
+				registered and verified, otherwise you take the risk your server or IP address to be blocked.</p>
 				
 				<h2 id="dependencies"><span class="n-sign">#</span> Dependencies</h2>
-				<p>Below are listed dependencies which will be installed automatically during the installation of “EasyMail”:</p>
+				<p>Below are listed the dependencies which will be installed automatically during the installation of “EasyMail”:</p>
 				<ul>
 					<li>Dovecot</li>
 					<li>Postfix</li>
@@ -152,14 +152,14 @@
 							<li>HDD/SSD 10 GB.</li>
 						</ul>
 					</li>
-					<li>Fresh installed Debian or Ubuntu server with 14.04 or newer.</li>
+					<li>A new fresh installation of Debian or Ubuntu 14.04, or any type of machine with Docker.</li>
 				</ul>
 				
-				<h2 id="build-on-docker"><span class="n-sign">#</span> Build on Docker (optional)</h2>
+				<h2 id="prepare-docker"><span class="n-sign">#</span> Prepare Docker (optional)</h2>
 				<p>There are cases when we may want to build the mail server on Docker. To do so, follow the steps below.</p>
 				<p>Install docker if you still don't have it on your machine. For further information check <a target="_blank" rel="nofollow" href="https://docs.docker.com/engine/installation/">Docker installation</a>.</p>
-				<p>For this tutorial we will use a docker image of Ubuntu 14.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
-				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "mail.example.com" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<p>We will use a docker image of Ubuntu 14.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
 				<p>Further explanations are required. The command above will build a new container <i>(named “easymail”)</i> 
 				with a new fresh installation of Ubuntu 14.04 and mapping for the following ports: 110, 25, 995, 80, 443, 587, 993 and 143.</p>
 				<p>For the proper work of the mail server, it is important each of those ports to be freed and not occupied by the services running on your physical machine. Each of them is used for:</p>
@@ -176,33 +176,53 @@
 				For example, if you have a web services installed on your physical machine, you most probably use ports 80 and 443, 
 				so you will have to use different ports in order to finish the installation above. For example you can use 8080 
 				instead of 80 and 44380 instead of 443. The command above will change:</p>
-				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "mail.example.com" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
 				<p>As you may have noticed, during the installation of the container we have mapped the directory: /etc/ssl/certs/. 
-				This is the directory which contains the SSL certificates for the domain name of the mail server - mail.example.com. 
+				This is the directory which contains the SSL certificates for the domain name of the mail server - <span class="red">mail.example.com</span>. 
 				We can use the SSL certificates to encrypt the communication with the mail server or we can skip this option. 
 				This is entirely an optional step.</p>
 				<p>When the creation of the container completes, you will be let inside the Docker container. Continue with the installation of “EasyMail”.</p>
 				
 				<h2 id="installing-easymail"><span class="n-sign">#</span> Installing EasyMail</h2>
-				<p>Execute the following commands:</p>
-				<figure><pre><code>apt-get update && apt-get install git nano -y</code></pre></figure>
-				<p>If you use Docker, you have to install git because the docker image above does not have it.</p>
+				<p>Install git before you continue.</p>
+				<p>Execute the following:</p>
+				<figure><pre><code>apt-get update && apt-get install git nano -y</code></pre></figure>				
 				<p>Clone the project “EasyMail” and start the script install.sh:</p>
 				<figure><pre><code>git clone https://github.com/runeasymail/easymail.git /easymail && bash /easymail/install.sh</code></pre></figure>
-				<p>During the installation you will be asked a few questions. Below you will find example answers which are applicable only for the current example.</p>
-				<figure><pre><code>Type hostname: mail.example.com
-Type admin's email password: iu34urc389fu349
+				<p>During the installation you will be asked a few questions. Below you will find answers which are applicable only for the current example.</p>
+				<figure><pre><code>Type hostname: <span class="red">mail.example.com</span>
+Type admin's email password: <span class="red">iu34urc389fu349</span>
 Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
-				<p>If you press “Yes”, you will be asked two additional questions addressed to the SSL certificates 
+				<p>The admin's email address mentioned during the installation is <span class="red">admin@mail.example.com</span>.</p>
+				<p>For the installation of your own SSL certificate, if you choose “y”, you will be asked two additional questions addressed to the SSL certificates 
 				<i>(this step requires the ssl directory to be mapped during the creation of the docker container)</i>:</p>			
-				<figure><pre><code>[SSL] CA Bundle file path: /etc/ssl/certs/CERTIFICATE-NAME.crt
-[SSL] Private key file path: /etc/ssl/certs/CERTIFICATE-NAME.key</code></pre></figure>
+				<figure><pre><code>[SSL] CA Bundle file path: /etc/ssl/certs/<span class="red">CERTIFICATE-NAME.crt</span>
+[SSL] Private key file path: /etc/ssl/certs/<span class="red">CERTIFICATE-NAME.key</span></code></pre></figure>
 				<p>After the configuration of the SSL certificates:</p>
 				<figure><pre><code>Is this installation is on Docker? [N/y] y</code></pre></figure>
-				<p>At the end of the installation, the installation script will generate a random password for the MySQL database 
-				which will be displayed on the screen in additional to a few further steps important for the completion of 
-				the installation process <i>(we will review them below anyway)</i>. Please, write down the MySQL password. 
-				If you have missed to write it down, don’t worry, follow the additional steps below in order to restart it:</p>
+				<p>Now be patient. The installation will take a few minutes.</p>
+				<p>At the end of the installation of "EasyMail", the installation script will generate data for the DKIM record <i>(you will need this later)</i> and a few random passwords for the MySQL database 
+				<i>(used to store email accounts, configurations, etc.)</i>. The DKIM record and the MySQL passwords will be displayed on the screen of your terminal when the installation ends. 
+				Write them down because you will need them!</p>
+
+				<div class="alert alert-danger" role="alert">The DKIM record and the MySQL passwords will be displayed on the screen of your terminal when the installation ends. 
+				Write them down because you will need them!</div>
+				
+				<p>If you have missed to write down your DKIM record, use these commands to find it:</p>
+				
+				<figure><pre><code>cd /etc/opendkim/keys</code></pre></figure>
+				
+				<p>In this directory you will find another sub-directory corresponding to your domain. Go inside:</p>				
+				
+				<figure><pre><code>cd mail.<span class="red">example.com</span></code></pre></figure>
+								
+				<p>Print the content of <i>mail.txt</i></p>
+				
+				<figure><pre><code>cat mail.txt</code></pre></figure>
+				
+				<p>Copy the content. This is your DKIM record.</p>
+				
+				<p>If you have missed to write down the passwords for the MySQL database, follow the additional steps below in order to restart them:</p>
 				<ul>
 					<li>Stop MySQL:</li>
 				</ul>
@@ -222,7 +242,7 @@ Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
 				<ul>
 					<li>Enter the new password for the root user as follows:</li>
 				</ul>
-				<figure><pre><code>update user set password=PASSWORD("mynewpassword") where User='root';</code></pre></figure>
+				<figure><pre><code>update user set password=PASSWORD("<span class="red">mynewpassword</span>") where User='root';</code></pre></figure>
 				<ul>
 					<li>and finally, flush the privileges:</li>
 				</ul>
@@ -234,11 +254,11 @@ Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
 
 sudo /etc/init.d/mysql stop
 sudo /etc/init.d/mysql start</code></pre></figure>
-				<p>When you finish the installation "EasyMail" will automatically start all services <i>(MySQL, Nginx, php5-fpm, Postfix, Dovecot and Spamassassin)</i>.</p>				
+				<p>When you finish the installation, "EasyMail" will automatically start all services <i>(MySQL, Nginx, php5-fpm, Postfix, Dovecot, Spamassassin and OpenDKIM)</i>.</p>				
 				
 				<h2 id="configuration"><span class="n-sign">#</span> Configuration</h2>
-				<p>The next important step is to add MX, CNAME and SPF records and to install and configure DKIM 
-				for the domain name used for the emails accounts. The SPF record and DKIM are optional but advisable.</p>
+				<p>The next important step is to add MX, CNAME and SPF records and to finish the configuration of DKIM 
+				for the domain name used for the email accounts <i>(in our case this is <span class="red">example.com</span>)</i>. The SPF record and DKIM are optional but advisable.</p>
 				
 				<h3 id="mx-record">MX record</h3>
 				<p>Steps:</p>
@@ -246,7 +266,7 @@ sudo /etc/init.d/mysql start</code></pre></figure>
 					<li>Go to the domain register of your domain names.</li>
 					<li>Add a new MX record for the domain you want to use for you emails. Example:</li>
 				</ul>
-				<figure><pre><code>Hostname: example.com
+				<figure><pre><code>Hostname: <span class="red">example.com</span>
 Priority: 0</code></pre></figure>
 
 				<h3 id="cname-records">CNAME records</h3>
@@ -256,10 +276,10 @@ Priority: 0</code></pre></figure>
 					<li>Add the following two CNAME records for the domain name of the maill server. Example:</li>
 				</ul>
 				<figure><pre><code>Name: autoconfig 
-Hostname: mail.example.com.</code></pre></figure>
+Hostname: <span class="red">mail.example.com</span>.</code></pre></figure>
 				<p>and</p>
 				<figure><pre><code>Name: autodiscover
-Hostname: mail.example.com.</code></pre></figure>
+Hostname: <span class="red">mail.example.com</span>.</code></pre></figure>
 				<p>With the help of these CNAMES, the mail server is able to generate the following XMLs:</p>
 				<p><a href="http://autoconfig.mail.example.com:80/mail/config-v1.1.xml" target="_blank" rel="nofollow">http://autoconfig.mail.example.com:80/mail/config-v1.1.xml</a></p>
 				<p><a href="http://autodiscover.mail.example.com:80/autodiscover/autodiscover.xml" target="_blank" rel="nofollow">http://autodiscover.mail.example.com:80/autodiscover/autodiscover.xml</a></p>
@@ -275,33 +295,39 @@ Hostname: mail.example.com.</code></pre></figure>
 				<p>Example:</p>
 				<ul>
 					<li>Go to the domain register of your domain names.</li>
-					<li>Add the following TXT record to the domain name used for the email accounts <i>(in our case this is example.com)</i>:</li>
+					<li>Add the following TXT record to the domain name used for the email accounts <i>(in our case this is <span class="red">example.com</span>)</i>:</li>
 				</ul>
 				<figure><pre><code>Name:  @
-Text: "v=spf1 a:mail.example.com ~all"</code></pre></figure>
-				<p>Everyone who receives an email from an email account with domain name example.com <i>(for example: <a href="mailto:contact@example.com">contact@example.com</a>)</i> 
+Text: "v=spf1 a:<span class="red">mail.example.com</span> ~all"</code></pre></figure>
+				<p>Everyone who receives an email from an email account with domain name <span class="red">example.com</span> <i>(for example: <a href="mailto:contact@example.com">contact@example.com</a>)</i> 
 				can check the SPF record of this domain and to see that it authorizes only the server with IP address recorded in 
-				the DNS A record of the mail server mail.example.com, to send emails. If somebody else try to send emails on behalf 
-				of example.com from a different server, this server most probably will go to the spam filters and permanently blocked.</p>
+				the DNS A record of the mail server <span class="red">mail.example.com</span>, to send emails. If somebody else tries to send emails on behalf 
+				of <span class="red">example.com</span> from a different server, this server most probably will go to the spam filters and permanently blocked.</p>
 				
 				<h3 id="dkim-configuration">DKIM configuration</h3>
-				<p>For the configuration of DKIM follow this tutorial <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy" target="_blank" rel="nofollow">DKIM Configuration</a>.</p>
+				<p>Go to the domain register of your domain names and for the domain name used for your email accounts add the following TXT record <i>(DKIM record)</i>:</p>
 				
+				<figure><pre><code>Name:  mail._domainkey
+Text: "<span class="red">YOUR-DKIM-KEY</span>"</code></pre></figure>
+				<p>Example <i>(do not use the example key below, it's only an illustration and will not work on your server)</i>:</p>
+				<figure><pre><code>Name:  mail._domainkey
+Text: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdEvPNpKchxLz2tsRbAxXHiLQ7nPWNxW1I9/D+nTYOlPBqQ8YFwYooUjzTxHsge+s9vCOhofvVoMztppB98VHcfb+AuXcM/6uYYUDnauI6S6Tm/Akqdj/H0cwo6zLcnm698X9ZyPBJbcoJSzqQaXNz7+Mh/O7SK0ZV5xyclln5NQIDAQAB"</code></pre></figure>
+				<p></p>
+							
 				<h3 id="ssl-certificate">SSL certificate</h3>
-				<p>During the installation of EasyMail you have been asked to provide path to the SSL certificates. If you want to change the certificates, simply replace the ones and restart your web service.</p>
+				<p>During the installation of "EasyMail" you have been asked to provide the path to the SSL certificates. If you want to change the certificates, simply replace them and restart your web service.</p>
 							
 				<h2 id="roundcube"><span class="n-sign">#</span> RoundCube</h2>
 				<p>“EasyMail” comes with a nice mail client “RoundCube”. In order to access it go to your web browser and type the following:</p>
-				<figure><pre><code>mail.example.com:44380</code></pre></figure>
+				<figure><pre><code><span class="red">mail.example.com</span>:44380</code></pre></figure>
 				<p>or</p>
 				<figure><pre><code>IP_ADDRESS_OF_THE_MAIL_SERVER:44380</code></pre></figure>
 				<p>Of course, you will need an email account to log in. Continue reading for further information how to add email accounts.</p>
 				<p>When you access your email account with RoundCube, you can change your password from “Settings” -> “Password”.</p>
 				
 				<h2 id="add-email-accounts"><span class="n-sign">#</span> Add email accounts</h2>
-				<p>All email accounts are stored in the MySQL database. The reason to store them in the database is for easy management. 
-				To add a new email account you will have to access the MySQL database <i>(remember, you will need the MySQL password)</i>. 
-				We will do that through the terminal.</p>
+				<p>All email accounts are stored in the MySQL database. To add a new email account you will have to access the MySQL database 
+				<i>(remember, you will need the MySQL password)</i>. We will do that through the terminal.</p>
 				<ul>
 					<li>Log in to your physical machine and access the terminal of the Ubuntu container if you use Docker.</li>
 					<li>Log in to MySQL:</li>
@@ -312,10 +338,11 @@ Text: "v=spf1 a:mail.example.com ~all"</code></pre></figure>
 				</ul>
 				<figure><pre><code>mysql> show databases;</code></pre></figure>
 				<p>The database used by “EasyMail” is “mailserver”.</p>
+				<figure><pre><code>mysql> use mailserver;</code></pre></figure>
 				<ul>
-					<li>List all tables inside database “mailserver”.</li>
+					<li>List all tables.</li>
 				</ul>
-				<figure><pre><code>mysql> show tables in mailserver;</code></pre></figure>
+				<figure><pre><code>mysql> show tables;</code></pre></figure>
 				<p>You will find four tables:</p>
 				<figure><pre><code>recipient_bcc
 virtual_aliases
@@ -324,8 +351,11 @@ virtual_users</code></pre></figure>
 				<p>The name of the tables are chosen in accordance with Postfix standards for email management. 
 				Better understanding of Postfix email management will give you more clear idea of how to work with these tables. 
 				The table “virtual_users” contains all email accounts. We can list them:</p>
-				<figure><pre><code>mysql> select * from mailserver.virtual_users;</code></pre></figure>
-				<p>or we can add a new record. Please bear in mind that the password field is encrypted with openssl_encrypt enctyption.</p>
+				<figure><pre><code>mysql> select * from virtual_users;</code></pre></figure>
+				<p>or we can add a new record.</p>
+				<figure><pre><code>mysql> insert into virtual_users values(<span class="red">ID</span>, <span class="red">DOMAIN_ID</span>, "<span class="red">PASSWORD</span>", "<span class="red">EMAIL_ACCOUNT</span>");</code></pre></figure>
+				<p>Please bear in mind that the password field is encrypted with openssl_encrypt enctyption.</p>
+				<figure><pre><code>mysql> quit;</code></pre></figure>
 				
 				<h2 id="additional"><span class="n-sign">#</span> Additional</h2>
 				<h3 id="autostart-the-service-after-reboot">Autostart the service after reboot</h3>
@@ -366,13 +396,13 @@ service opendkim start</code></pre></figure>
 				<h3 id="transactional-emails">Transactional emails</h3>
 				<p>The good thing about the current mail server is that it can be used to send transactional emails. 
 				For the configuration with an external client we can use:</p>
-				<figure><pre><code>Host: mail.example.com
+				<figure><pre><code>Host: <span class="red">mail.example.com</span>
 Username: contact@example.com
 SMTP Secure: tls
 Port: 587</code></pre></figure>
 				<p>Example for Laravel:</p>				
 				<figure><pre><code>MAIL_DRIVER=smtp
-MAIL_HOST=mail.example.com
+MAIL_HOST=<span class="red">mail.example.com</span>
 MAIL_PORT=587
 MAIL_USERNAME=contact@example.com
 MAIL_PASSWORD=

@@ -193,6 +193,9 @@ ul.aligned-left {
 	text-align: left;
 }
 	
+.red {
+	color: #df1c1c;
+}
 	/* Callout */
 .callout.rule {
     border-bottom: 1px solid #dee0df;
