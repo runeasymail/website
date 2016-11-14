@@ -175,6 +175,27 @@ h2 span.n-sign {
     right: 20px;
 }
 
+.ask-question {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #4fcfef;
+    border-radius: 2px;
+    padding: 10px;
+    width: 100%;
+    color: #fff;
+    font-size: 12px;
+	z-index: 1000;
+	opacity: 0.9;
+}
+	.ask-question a {
+		color: #157d97;
+	}
+	
+	.ask-question a:hover {
+		color: #0d404d;
+	}
+	
 @media (max-width: 800px) {
 	.big-logo {
 		width: 300px;
@@ -196,6 +217,16 @@ ul.aligned-left {
 .red {
 	color: #df1c1c;
 }
+
+.logos {
+	text-align: center;
+	margin-top: 45px;
+}
+
+	.logos img:not(:last-child) {
+		margin-right: 20px;
+	}
+
 	/* Callout */
 .callout.rule {
     border-bottom: 1px solid #dee0df;

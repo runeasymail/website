@@ -120,13 +120,13 @@
 				
 				<h2 id="introduction"><span class="n-sign">#</span> Introduction</h2>
 				<p>Before we start we will have to make a few clarifications. 
-				For the installation and configurations below we use two domain names, one for the mail server and one for the domain name 
+				For the installation and the configurations below we use two domain names, one for the mail server and one for the domain name 
 				which will be used for the email accounts <i>(for example: <a href="mailto:contacts@example.com">contacts@example.com</a>)</i>. 
 				For the mail server we will use:</p>
 				
 				<figure><pre><code><span class="red">mail.example.com</span></code></pre></figure>
 				
-				<p>and for the email domain name:</p>
+				<p>and for the domain name of the email:</p>
 				
 				<figure><pre><code><span class="red">example.com</span></code></pre></figure>
 				
@@ -134,7 +134,11 @@
 				registered and verified, otherwise you take the risk your server or IP address to be blocked.</p>
 				
 				<p>Also, the domain name <span class="red">mail.example.com</span> used for the mail server must be configured to point to the IP address
-				of the machine which is going to be used as a mail server and where you will install "EasyMail".</p>
+				of the machine which is going to be used as a mail server and where you will install "EasyMail". Example configuration:</p>
+				
+				<figure><pre><code>Type: A Record
+Name: @
+IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				
 				<h2 id="dependencies"><span class="n-sign">#</span> Dependencies</h2>
 				<p>Below are listed the dependencies which will be installed automatically during the installation of “EasyMail”:</p>
@@ -418,6 +422,9 @@ MAIL_ENCRYPTION=tls</code></pre></figure>
     <!-- /.container -->
 
     <!-- Footer -->
+	<div id="ask-question" class="ask-question">If you have any issues and questions during the Installation, we would like to hear them and to help.<br /><br />
+		<a href="https://runeasymail.slack.com/" target="_blank" rel="nofollow">Slack</a>
+	</div>
 	<a href="#navigation" class="go-to-top"><i class="fa fa-arrow-circle-up fa-3x"></i></a>
     <footer class="footer">
         <div class="container">
@@ -455,6 +462,26 @@ MAIL_ENCRYPTION=tls</code></pre></figure>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
+	
+	<!-- Cusatom js -->
+	<script>
+		$(document).ready(function() {		
+			var headerTop = $('#navigation').offset().top;		
+			var headerBottom = headerTop + 100; // Sub-menu should appear after this distance from top.
+			$(window).scroll(function () {
+				var scrollTop = $(window).scrollTop(); // Current vertical scroll position from the top				
+				if (scrollTop > headerBottom) { // Check to see if we have scrolled more than headerBottom
+					if (($("#ask-question").is(":visible") === false)) {
+						$('#ask-question').fadeIn('slow');
+					}
+				} else {
+					if ($("#ask-question").is(":visible")) {
+						$('#ask-question').fadeOut('slow');
+					}
+				}
+			});
+		});
+	</script>
 	
 	<!-- GA -->
 	<script>
