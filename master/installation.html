@@ -121,17 +121,22 @@
 				
 				<h2 id="introduction"><span class="n-sign">#</span> Introduction</h2>
 				<p>Before we start we will have to make a few clarifications. 
-				For the installation and the configurations below we use two domain names, one for the mail server and one for the domain name 
-				which will be used for the email accounts <i>(for example: <a href="mailto:contacts@example.com">contacts@example.com</a>)</i>. 
-				For the mail server we will use:</p>
+				For the installation and the configurations below we use two domain names, one for the mail server:</p>
 				
 				<figure><pre><code><span class="red">mail.example.com</span></code></pre></figure>
 				
-				<p>and for the domain name of the email:</p>
+				<p>which will be used to access the mail server <i>(mail boxes, configurations of the mail server, etc.)</i> 
+				and one for the domain name:</p>
 				
 				<figure><pre><code><span class="red">example.com</span></code></pre></figure>
 				
-				<p>Feel free to change them to your own domains or sub domains, but keep in mind something very important. The two domains must be 
+				<p>which will be used for the email accounts <i>(for example: <a href="mailto:contacts@example.com">contacts@example.com</a>)</i>. 
+				
+				<p>It is important to understand that the mail server must have a domain name which corresponds to it <i>(in our case this is mail.example.com)</i> but
+				it can have multiple domain names for the email accounts <i>(like: contacts@example.com, contacts@anotherexample.com, contacts@alsoanotherexample.com, etc.)</i>.
+				In our case, we will use only one domain name for the email accounts.</p>
+				
+				<p>Feel free to change them to your own domains or sub domains, but keep in mind something very important, all domains must be 
 				registered and verified, otherwise you take the risk your server or IP address to be blocked.</p>
 				
 				<p>Also, the domain name <span class="red">mail.example.com</span> used for the mail server must be configured to point to the IP address
@@ -140,6 +145,8 @@
 				<figure><pre><code>Type: A Record
 Name: @
 IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
+				
+				<p>All commands below must be run as root or another user with root privileges.</p>
 				
 				<h2 id="dependencies"><span class="n-sign">#</span> Dependencies</h2>
 				<p>Below are listed the dependencies which will be installed automatically during the installation of “EasyMail”:</p>
@@ -191,12 +198,11 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				This is entirely an optional step.</p>
 				<p>When the creation of the container completes, you will be let inside the Docker container. Continue with the installation of “EasyMail”.</p>
 				
-				<h2 id="installing-easymail"><span class="n-sign">#</span> Installing EasyMail</h2>
-				<p>Install git before you continue.</p>
+				<h2 id="installing-easymail"><span class="n-sign">#</span> Installing EasyMail</h2>				
 				<p>Execute the following:</p>
-				<figure><pre><code>apt-get update && apt-get install git nano -y</code></pre></figure>				
-				<p>Clone the project “EasyMail” and start the script install.sh:</p>
-				<figure><pre><code>git clone https://github.com/runeasymail/easymail.git /easymail && bash /easymail/install.sh</code></pre></figure>
+				<figure><pre><code>apt-get update && apt-get install nano -y</code></pre></figure>				
+				<p>Download “EasyMail” and start the script install.sh:</p>
+				<figure><pre><code>wget https://github.com/runeasymail/easymail/archive/v0.5.tar.gz -O easymail.tgz && mkdir easymail && cd easymail && tar -xvzf ../easymail.tgz --strip 1 && bash install.sh</code></pre></figure>							
 				<p>During the installation you will be asked a few questions. Below you will find answers which are applicable only for the current example.</p>
 				<figure><pre><code>Type hostname: <span class="red">mail.example.com</span>
 Type admin's email password: <span class="red">iu34urc389fu349</span>
