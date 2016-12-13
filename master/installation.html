@@ -156,8 +156,12 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 					<li>Roundcube</li>
 					<li>SpamAssassin</li>
 					<li>Nginx</li>
-					<li>MySQL</li>
+					<li>MySQL 5.6</li>
+					<li>PHP 5.6</li>
 				</ul>
+				<p>If any of those services is already installed on your machine, "EasyMail" will stop the installation. You must be sure that 
+				you have cleaned up your machine properly before you start. The reason for this is very simple, different services have different 
+				versions and dependencies. Starting from scratch is the best way to be sure that the installation will go well and you won't enter some "dependency hell".</p>
 				
 				<h2 id="server-requirements"><span class="n-sign">#</span> Server Requirements</h2>
 				<ul>
@@ -172,7 +176,7 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				
 				<h2 id="prepare-docker"><span class="n-sign">#</span> Prepare Docker (optional)</h2>
 				<p>There are cases when we may want to build the mail server on Docker. To do so, follow the steps below.</p>
-				<p>Install docker if you still don't have it on your machine. For further information check <a target="_blank" rel="nofollow" href="https://docs.docker.com/engine/installation/">Docker installation</a>.</p>
+				<p>Install Docker if you still don't have it on your machine. For further information check <a target="_blank" rel="nofollow" href="https://docs.docker.com/engine/installation/">Docker installation</a>.</p>
 				<p>We will use a docker image of Ubuntu 14.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
 				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
 				<p>Further explanations are required. The command above will build a new container <i>(named “easymail”)</i> 
@@ -192,6 +196,7 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				so you will have to use different ports in order to finish the installation above. For example you can use 8080 
 				instead of 80 and 44380 instead of 443. The command above will change:</p>
 				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<p>During the installation described below we will use ports 443 and 80 but bear in mind that the ports may vary depending on your particular case.</p>
 				<p>As you may have noticed, during the installation of the container we have mapped the directory: /etc/ssl/certs/. 
 				This is the directory which contains the SSL certificates for the domain name of the mail server - <span class="red">mail.example.com</span>. 
 				We can use the SSL certificates to encrypt the communication with the mail server or we can skip this option. 
@@ -215,7 +220,7 @@ Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
 				<p>After the configuration of the SSL certificates:</p>
 				<figure><pre><code>Is this installation is on Docker? [N/y] y</code></pre></figure>
 				<p>Now be patient. The installation will take a few minutes.</p>
-				<p>At the end of the installation of "EasyMail", the installation script will generate data for the DKIM record <i>(you will need this later)</i> and a few random passwords for the MySQL database 
+				<p>In the end of the installation of "EasyMail", the installation script will generate data for the DKIM record <i>(you will need this later)</i> and a few random passwords for the MySQL database 
 				<i>(used to store email accounts, configurations, etc.)</i>. The DKIM record and the MySQL passwords will be displayed on the screen of your terminal when the installation ends. 
 				Write them down because you will need them!</p>
 
@@ -228,7 +233,7 @@ Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
 				
 				<p>In this directory you will find another sub-directory corresponding to your domain. Go inside:</p>				
 				
-				<figure><pre><code>cd mail.<span class="red">example.com</span></code></pre></figure>
+				<figure><pre><code>cd <span class="red">mail.example.com</span></code></pre></figure>
 								
 				<p>Print the content of <i>mail.txt</i></p>
 				
@@ -333,9 +338,9 @@ Text: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdEvPNpKchxLz2tsR
 							
 				<h2 id="roundcube"><span class="n-sign">#</span> RoundCube</h2>
 				<p>“EasyMail” comes with a nice mail client “RoundCube”. In order to access it go to your web browser and type the following:</p>
-				<figure><pre><code><span class="red">mail.example.com</span>:44380</code></pre></figure>
+				<figure><pre><code><span class="red">mail.example.com</span>:443</code></pre></figure>
 				<p>or</p>
-				<figure><pre><code>IP_ADDRESS_OF_THE_MAIL_SERVER:44380</code></pre></figure>
+				<figure><pre><code>IP_ADDRESS_OF_THE_MAIL_SERVER:443</code></pre></figure>
 				<p>Of course, you will need an email account to log in. Continue reading for further information how to add email accounts.</p>
 				<p>When you access your email account with RoundCube, you can change your password from “Settings” -> “Password”.</p>
 				
