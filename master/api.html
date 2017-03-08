@@ -170,7 +170,7 @@ password - string</code></pre></figure>
 				<figure><pre><code>API_URL/users/:domain_id</code></pre></figure>			
 				
 				<p>Request <i>(CURL)</i>:</p>
-				<figure><pre><code>curl -X GET -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" "API_URL/domains"</code></pre></figure>
+				<figure><pre><code>curl -X GET -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" "API_URL/users/DOMAIN_ID"</code></pre></figure>
 				
 				<p>Input parameters:</p>
 				<figure><pre><code>domain_id - id of domain</code></pre></figure>
@@ -208,7 +208,7 @@ password - string</code></pre></figure>
 				<figure><pre><code>API_URL/user/:domain_id</code></pre></figure>			
 				
 				<p>Request <i>(CURL)</i>:</p>
-				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "email=NEW_EMAIL" -F "password=NEW_UNENCRYPTED_PASS" "API_URL/users/DOMAIN_ID"</code></pre></figure>
+				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "email=NEW_EMAIL" -F "password=NEW_UNENCRYPTED_PASS" "API_URL/user/DOMAIN_ID"</code></pre></figure>
 				
 				<p>Input parameters:</p>
 				<figure><pre><code>domain_id - id of domain
