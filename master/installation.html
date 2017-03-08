@@ -93,7 +93,7 @@
 				
 				<p class="lead">Tools</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">API</a>					
+                    <a href="/master/api" class="list-group-item">API</a>					
                 </div>
             </div>
             <div class="col-md-9">
@@ -118,8 +118,7 @@
 						<li><a href="#add-email-accounts"><span class="n-sign">#</span> Add email accounts</a></li>
 						<li><a href="#additional"><span class="n-sign">#</span> Additional</a></li>
 						<li>
-							<ol><a href="#autostart-the-service-after-reboot"><span class="n-sign">#</span> Autostart the service after reboot</a></ol>
-                            <ol><a href="#forward-emails"><span class="n-sign">#</span> Forward emails</a></ol>
+							<ol><a href="#autostart-the-service-after-reboot"><span class="n-sign">#</span> Autostart the service after reboot</a></ol>                            
 							<ol><a href="#transactional-emails"><span class="n-sign">#</span> Transactional emails</a></ol>
                         </li>
                     </ul>
@@ -159,11 +158,11 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				<ul>
 					<li>Dovecot</li>
 					<li>Postfix</li>
-					<li>Roundcube</li>
+					<li>Roundcube 1.2.3</li>
 					<li>SpamAssassin</li>
 					<li>Nginx</li>
-					<li>MySQL 5.6</li>
-					<li>PHP 5.6</li>
+					<li>MySQL 5.7</li>
+					<li>PHP 7</li>
 				</ul>
 				<p>If any of those services is already installed on your machine, "EasyMail" will stop the installation. You must be sure that 
 				you have cleaned up your machine properly before you start. The reason for this is very simple, different services have different 
@@ -177,16 +176,16 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 							<li>HDD/SSD 10 GB.</li>
 						</ul>
 					</li>
-					<li>A new fresh installation of Debian or Ubuntu 14.04, or any type of machine with Docker.</li>
+					<li>A new fresh installation of Debian or Ubuntu 16.04, or any type of machine with Docker.</li>
 				</ul>
 				
 				<h2 id="prepare-docker"><span class="n-sign">#</span> Prepare Docker (optional)</h2>
 				<p>There are cases when we may want to build the mail server on Docker. To do so, follow the steps below.</p>
 				<p>Install Docker if you still don't have it on your machine. For further information check <a target="_blank" rel="nofollow" href="https://docs.docker.com/engine/installation/">Docker installation</a>.</p>
-				<p>We will use a docker image of Ubuntu 14.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
-				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<p>We will use a docker image of Ubuntu 16.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:16.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
 				<p>Further explanations are required. The command above will build a new container <i>(named “easymail”)</i> 
-				with a new fresh installation of Ubuntu 14.04 and mapping for the following ports: 110, 25, 995, 80, 443, 587, 993 and 143.</p>
+				with a new fresh installation of Ubuntu 16.04 and mapping for the following ports: 110, 25, 995, 80, 443, 587, 993 and 143.</p>
 				<p>For the proper work of the mail server, it is important each of those ports to be freed and not occupied by the services running on your physical machine. Each of them is used for:</p>
 				<figure><pre><code>110 - POP3
 25 - SMTP (Non-Exctypted) used by Postfix
@@ -201,7 +200,7 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				For example, if you have a web services installed on your physical machine, you most probably use ports 80 and 443, 
 				so you will have to use different ports in order to finish the installation above. For example you can use 8080 
 				instead of 80 and 44380 instead of 443. The command above will change:</p>
-				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:14.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:16.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
 				<p>During the installation described below we will use ports 443 and 80 but bear in mind that the ports may vary depending on your particular case.</p>
 				<p>As you may have noticed, during the installation of the container we have mapped the directory: /etc/ssl/certs/. 
 				This is the directory which contains the SSL certificates for the domain name of the mail server - <span class="red">mail.example.com</span>. 
@@ -213,24 +212,30 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				<p>Execute the following:</p>
 				<figure><pre><code>apt-get update && apt-get install nano wget -y</code></pre></figure>				
 				<p>Download “EasyMail” and start the script install.sh:</p>
-				<figure><pre><code>wget https://github.com/runeasymail/easymail/archive/v0.5.tar.gz -O easymail.tgz && mkdir easymail && cd easymail && tar -xvzf ../easymail.tgz --strip 1 && bash install.sh</code></pre></figure>							
+				<figure><pre><code>wget https://github.com/runeasymail/easymail/archive/v0.6.tar.gz -O easymail.tgz && mkdir easymail && cd easymail && tar -xvzf ../easymail.tgz --strip 1 && bash install.sh</code></pre></figure>							
 				<p>During the installation you will be asked a few questions. Below you will find answers which are applicable only for the current example.</p>
 				<figure><pre><code>Type hostname: <span class="red">mail.example.com</span>
 Type admin's email password: <span class="red">iu34urc389fu349</span>
+Use Let's encrypt SSL [n/Y]
 Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
 				<p>The admin's email address mentioned during the installation is <span class="red">admin@mail.example.com</span>.</p>
 				<p>For the installation of your own SSL certificate, if you choose “y”, you will be asked two additional questions addressed to the SSL certificates 
 				<i>(this step requires the ssl directory to be mapped during the creation of the docker container)</i>:</p>			
 				<figure><pre><code>[SSL] CA Bundle file path: /etc/ssl/certs/<span class="red">CERTIFICATE-NAME.crt</span>
 [SSL] Private key file path: /etc/ssl/certs/<span class="red">CERTIFICATE-NAME.key</span></code></pre></figure>
-				<p>After the configuration of the SSL certificates:</p>
+				<p>After the configuration of the SSL certificate we can still choose not to use it but to use <a href="https://letsencrypt.org/" target="_blank" rel="nofollow">Letsencrypt</a>:</p>
+				<figure><pre><code>Use Let's encrypt SSL [n/Y]</code></pre></figure>				
+				<p>By choosing this option with "y", EasyMail will set up Let's encrypt for your domain name. The only requirement which you will have to fulfill is the domain name
+used for the hostname to be valid. Letsencrypt is a free SSL certificate which will be generated by EasyMail for you. The standard Letsencrypt expires in 3 months after its generation but don't worry, EasyMail will
+take care of that for you.</p>
+				<p>The final step is to choose if your installation is on Docker:</p>
 				<figure><pre><code>Is this installation is on Docker? [N/y] y</code></pre></figure>
 				<p>Now be patient. The installation will take a few minutes.</p>
-				<p>In the end of the installation of "EasyMail", the installation script will generate data for the DKIM record <i>(you will need this later)</i> and a few random passwords for the MySQL database 
-				<i>(used to store email accounts, configurations, etc.)</i>. The DKIM record and the MySQL passwords will be displayed on the screen of your terminal when the installation ends. 
+				<p>In the end of the installation of "EasyMail", the installation script will generate data for the DKIM record <i>(you will need this later)</i>, a few random passwords for the MySQL database 
+				<i>(used to store email accounts, configurations, etc.)</i> and also the URL address of your API. The DKIM record, the MySQL passwords and the API URL will be displayed on the screen of your terminal when the installation ends. 
 				Write them down because you will need them!</p>
 
-				<div class="alert alert-danger" role="alert">The DKIM record and the MySQL passwords will be displayed on the screen of your terminal when the installation ends. 
+				<div class="alert alert-danger" role="alert">The DKIM record, the MySQL passwords and the API URL will be displayed on the screen of your terminal when the installation ends. 
 				Write them down because you will need them!</div>
 				
 				<p>If you have missed to write down your DKIM record, use these commands to find it:</p>
@@ -246,40 +251,6 @@ Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
 				<figure><pre><code>cat mail.txt</code></pre></figure>
 				
 				<p>Copy the content. This is your DKIM record.</p>
-				
-				<p>If you have missed to write down the passwords for the MySQL database, follow the additional steps below in order to restart them:</p>
-				<ul>
-					<li>Stop MySQL:</li>
-				</ul>
-				<figure><pre><code>sudo /etc/init.d/mysql stop</code></pre></figure>
-				<ul>
-					<li>Next we need to start MySQL in safe mode - that is to say, we will start MySQL but skip the user privileges table.</li>
-				</ul>
-				<figure><pre><code>sudo mysqld_safe --skip-grant-tables &</code></pre></figure>
-				<ul>
-					<li>Log in to MySQL:</li>
-				</ul>
-				<figure><pre><code>mysql -uroot</code></pre></figure>
-				<ul>
-					<li>Next, instruct MySQL which database to use:</li>
-				</ul>
-				<figure><pre><code>use mysql;</code></pre></figure>
-				<ul>
-					<li>Enter the new password for the root user as follows:</li>
-				</ul>
-				<figure><pre><code>update user set password=PASSWORD("<span class="red">mynewpassword</span>") where User='root';</code></pre></figure>
-				<ul>
-					<li>and finally, flush the privileges:</li>
-				</ul>
-				<figure><pre><code>flush privileges;</code></pre></figure>
-				<ul>
-					<li>Quit and restart MySQL:</li>
-				</ul>
-				<figure><pre><code>quit
-
-sudo /etc/init.d/mysql stop
-sudo /etc/init.d/mysql start</code></pre></figure>
-				<p>When you finish the installation, "EasyMail" will automatically start all services <i>(MySQL, Nginx, php5-fpm, Postfix, Dovecot, Spamassassin and OpenDKIM)</i>.</p>				
 				
 				<h2 id="configuration"><span class="n-sign">#</span> Configuration</h2>
 				<p>The next important step is to add MX, CNAME and SPF records and to finish the configuration of DKIM 
@@ -339,8 +310,8 @@ Text: "<span class="red">YOUR-DKIM-KEY</span>"</code></pre></figure>
 Text: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdEvPNpKchxLz2tsRbAxXHiLQ7nPWNxW1I9/D+nTYOlPBqQ8YFwYooUjzTxHsge+s9vCOhofvVoMztppB98VHcfb+AuXcM/6uYYUDnauI6S6Tm/Akqdj/H0cwo6zLcnm698X9ZyPBJbcoJSzqQaXNz7+Mh/O7SK0ZV5xyclln5NQIDAQAB"</code></pre></figure>
 				<p></p>
 							
-				<h3 id="ssl-certificate">SSL certificate</h3>
-				<p>During the installation of "EasyMail" you have been asked to provide the path to the SSL certificates. If you want to change the certificates, simply replace them and restart your web service.</p>
+				<h3 id="ssl-certificate">SSL certificate (your own certificate)</h3>
+				<p>During the installation of "EasyMail" you have been asked to provide the path to your own SSL certificate. If you want to change it, simply replace it and restart your web service.</p>
 							
 				<h2 id="roundcube"><span class="n-sign">#</span> RoundCube</h2>
 				<p>“EasyMail” comes with a nice mail client “RoundCube”. In order to access it go to your web browser and type the following:</p>
@@ -351,36 +322,7 @@ Text: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdEvPNpKchxLz2tsR
 				<p>When you access your email account with RoundCube, you can change your password from “Settings” -> “Password”.</p>
 				
 				<h2 id="add-email-accounts"><span class="n-sign">#</span> Add email accounts</h2>
-				<p>All email accounts are stored in the MySQL database. To add a new email account you will have to access the MySQL database 
-				<i>(remember, you will need the MySQL password)</i>. We will do that through the terminal.</p>
-				<ul>
-					<li>Log in to your physical machine and access the terminal of the Ubuntu container if you use Docker.</li>
-					<li>Log in to MySQL:</li>
-				</ul>
-				<figure><pre><code>mysql -u root -p</code></pre></figure>
-				<ul>
-					<li>List the databases:</li>
-				</ul>
-				<figure><pre><code>mysql> show databases;</code></pre></figure>
-				<p>The database used by “EasyMail” is “mailserver”.</p>
-				<figure><pre><code>mysql> use mailserver;</code></pre></figure>
-				<ul>
-					<li>List all tables.</li>
-				</ul>
-				<figure><pre><code>mysql> show tables;</code></pre></figure>
-				<p>You will find four tables:</p>
-				<figure><pre><code>recipient_bcc
-virtual_aliases
-virtual_domains
-virtual_users</code></pre></figure>
-				<p>The name of the tables are chosen in accordance with Postfix standards for email management. 
-				Better understanding of Postfix email management will give you more clear idea of how to work with these tables. 
-				The table “virtual_users” contains all email accounts. We can list them:</p>
-				<figure><pre><code>mysql> select * from virtual_users;</code></pre></figure>
-				<p>or we can add a new record.</p>
-				<figure><pre><code>mysql> insert into virtual_users values(<span class="red">ID</span>, <span class="red">DOMAIN_ID</span>, "<span class="red">PASSWORD</span>", "<span class="red">EMAIL_ACCOUNT</span>");</code></pre></figure>
-				<p>Please bear in mind that the password field is encrypted with openssl_encrypt enctyption.</p>
-				<figure><pre><code>mysql> quit;</code></pre></figure>
+				<p>Iif you want to add new email account you can <a href="/master/api">use the API</a>.</p>
 				
 				<h2 id="additional"><span class="n-sign">#</span> Additional</h2>
 				<h3 id="autostart-the-service-after-reboot">Autostart the service after reboot</h3>
@@ -408,16 +350,7 @@ service spamassassin start
 service opendkim start</code></pre></figure>
 				<p>These are the services which will be starter automatically if the machine reboots. 
 				That's all you need to know, "EasyMail" takes care for the rest.</p>
-				
-				<h3 id="forward-emails">Forward emails</h3>
-				<p>If you want to forward all incomming emails to another email:</p>
-				<ul>
-					<li>Go to the terminal.</li>
-					<li>Access mysql database.</li>
-					<li>Add a new record to table “recipient_bcc”.</li>
-				</ul>
-				<p>If you want to forward emails to Gmail, another option is to use Gmail SMTP client.</p>
-				
+							
 				<h3 id="transactional-emails">Transactional emails</h3>
 				<p>The good thing about the current mail server is that it can be used to send transactional emails. 
 				For the configuration with an external client we can use:</p>
