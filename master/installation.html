@@ -215,10 +215,8 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				<figure><pre><code>wget https://github.com/runeasymail/easymail/archive/v0.6.1.tar.gz -O easymail.tgz && mkdir easymail && cd easymail && tar -xvzf ../easymail.tgz --strip 1 && bash install.sh</code></pre></figure>							
 				<p>During the installation you will be asked a few questions. Below you will find answers which are applicable only for the current example.</p>
 				<figure><pre><code>Type hostname: <span class="red">mail.example.com</span>
-Type admin's email password: <span class="red">iu34urc389fu349</span>
 Use Let's encrypt SSL [n/Y]
-Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>
-				<p>The admin's email address mentioned during the installation is <span class="red">admin@mail.example.com</span>.</p>
+Do you want to install your own ssl certificates? [n/Y]</code></pre></figure>				
 				<p>For the installation of your own SSL certificate, if you choose “y”, you will be asked two additional questions addressed to the SSL certificates 
 				<i>(this step requires the ssl directory to be mapped during the creation of the docker container)</i>:</p>			
 				<figure><pre><code>[SSL] CA Bundle file path: /etc/ssl/certs/<span class="red">CERTIFICATE-NAME.crt</span>
@@ -230,11 +228,11 @@ used for the hostname to be valid. Letsencrypt is a free SSL certificate which w
 				<p>The final step is to choose if your installation is on Docker:</p>
 				<figure><pre><code>Is this installation is on Docker? [N/y] y</code></pre></figure>
 				<p>Now be patient. The installation will take a few minutes.</p>
-				<p>In the end of the installation of "EasyMail", the installation script will generate data for the DKIM record <i>(you will need this later)</i>, a few random passwords for the MySQL database 
-				<i>(used to store email accounts, configurations, etc.)</i> and also the URL address of your API. The DKIM record, the MySQL passwords and the API URL will be displayed on the screen of your terminal when the installation ends. 
+				<p>In the end of the installation of "EasyMail", the installation script will generate data for the DKIM record <i>(you will need this later)</i>, password for the admin email address <span class="red">admin@mail.example.com</span>,
+				a few random passwords for the MySQL database <i>(used to store email accounts, configurations, etc.)</i> and also the URL address of your API. The DKIM record, the MySQL passwords and the API URL will be displayed on the screen of your terminal when the installation ends. 
 				Write them down because you will need them!</p>
 
-				<div class="alert alert-danger" role="alert">The DKIM record, the MySQL passwords and the API URL will be displayed on the screen of your terminal when the installation ends. 
+				<div class="alert alert-danger" role="alert">The DKIM record, the admin password, the MySQL passwords and the API URL will be displayed on the screen of your terminal when the installation ends. 
 				Write them down because you will need them!</div>
 				
 				<p>If you have missed to write down your DKIM record, use these commands to find it:</p>
