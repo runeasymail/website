@@ -162,7 +162,7 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 					<li>SpamAssassin</li>
 					<li>Nginx</li>
 					<li>MySQL 5.7</li>
-					<li>PHP 7</li>
+					<li>PHP 7.0</li>
 				</ul>
 				<p>If any of those services is already installed on your machine, "EasyMail" will stop the installation. You must be sure that 
 				you have cleaned up your machine properly before you start. The reason for this is very simple, different services have different 
@@ -183,7 +183,7 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 				<p>There are cases when we may want to build the mail server on Docker. To do so, follow the steps below.</p>
 				<p>Install Docker if you still don't have it on your machine. For further information check <a target="_blank" rel="nofollow" href="https://docs.docker.com/engine/installation/">Docker installation</a>.</p>
 				<p>We will use a docker image of Ubuntu 16.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
-				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -p=7080:7080 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:16.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:16.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
 				<p>Further explanations are required. The command above will build a new container <i>(named “easymail”)</i> 
 				with a new fresh installation of Ubuntu 16.04 and mapping for the following ports: 110, 25, 995, 80, 443, 587, 993 and 143.</p>
 				<p>For the proper work of the mail server, it is important each of those ports to be freed and not occupied by the services running on your physical machine. Each of them is used for:</p>
@@ -195,14 +195,13 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 587 - SMTP (StartTLS)
 993 - IMAP (SSL)
 143 - IMAP (StartTLS)
-465 - SMTP (SSL)
-7080 - Used by the Management API</code></pre></figure>
+465 - SMTP (SSL)</code></pre></figure>
 				<p>If any of the ports above is already occupied you will have to use another one or to free them. 
 				For example, if you have a web services installed on your physical machine, you most probably use ports 80 and 443, 
 				so you will have to use different ports in order to finish the installation above. For example you can use 8080 
-				instead of 80, 44380 instead of 443 and 708080 instead of 7080. The command above will change:</p>
-				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -p=708080:7080 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:16.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
-				<p>During the installation described below we will use ports 443, 80 and 7080 but bear in mind that the ports may vary depending on your particular case.</p>
+				instead of 80 and 44380 instead of 443. The command above will change:</p>
+				<figure><pre><code>docker run -it -p=110:110 -p=25:25 -p=995:995 -p=8080:80 -p=44380:443  -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" -v /etc/ssl/certs/:/etc/ssl/certs/ ubuntu:16.04 /bin/sh -c "if [ -f /run.sh ]; then bash /run.sh; fi; exec /bin/bash"</code></pre></figure>
+				<p>During the installation described below we will use ports 443 and 80 but bear in mind that the ports may vary depending on your particular case.</p>
 				<p>As you may have noticed, during the installation of the container we have mapped the directory: /etc/ssl/certs/. 
 				This is the directory which contains the SSL certificates for the domain name of the mail server - <span class="red">mail.example.com</span>. 
 				We can use the SSL certificates to encrypt the communication with the mail server or we can skip this option. 
@@ -341,7 +340,7 @@ Text: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdEvPNpKchxLz2tsR
 				<p>The file contains the following code:</p>
 				<figure><pre><code>service mysql start
 service nginx start
-service php5-fpm start
+service php7.0-fpm start
 /etc/init.d/postfix start
 /usr/sbin/dovecot
 service spamassassin start

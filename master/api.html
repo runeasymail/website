@@ -107,6 +107,8 @@
 						<li><a href="#get-users"><span class="n-sign">#</span> Get users</a></li>
 						<li><a href="#create-domain-and-email-account"><span class="n-sign">#</span> Create domain and add email account</a></li>
 						<li><a href="#create-user"><span class="n-sign">#</span> Create user</a></li>
+						<li><a href="#change-users-password"><span class="n-sign">#</span> Change user's password</a></li>						
+						<li><a href="#generate-letsencrypt-certificate"><span class="n-sign">#</span> Generate Letsencrypt certificate</a></li>						
                     </ul>
                 </div>
 				
@@ -138,7 +140,7 @@ password - string</code></pre></figure>
 				
 				
 				<!-- Get domains -->
-				<h2 id="create-domain-and-email-account"><span class="n-sign">#</span> Get domains</h2>
+				<h2 id="get-domains"><span class="n-sign">#</span> Get domains</h2>
 				<p>It's will give list of all availible domains used for the email accounts.</p>
 				<p><button class="btn btn-success" type="button">GET</button></p>
 				<figure><pre><code>API_URL/domains</code></pre></figure>			
@@ -187,7 +189,7 @@ password - string</code></pre></figure>
 }</code></pre></figure>
 				
 				<!-- Create domain and add email account -->
-				<h2 id="get-domains"><span class="n-sign">#</span> Create domain and add email account</h2>
+				<h2 id="create-domain-and-email-account"><span class="n-sign">#</span> Create domain and add email account</h2>
 				<p>This method will create a new domain and it will add a new email account to it.</p>
 				<p><button class="btn btn-primary" type="button">POST</button></p>
 				<figure><pre><code>API_URL/domains</code></pre></figure>			
@@ -202,20 +204,44 @@ password - string</code></pre></figure>
 				
 				
 				<!-- Create user -->
-				<h2 id="get-domains"><span class="n-sign">#</span> Create user</h2>
+				<h2 id="create-user"><span class="n-sign">#</span> Create user</h2>
 				<p>Create a new email account.</p>
 				<p><button class="btn btn-primary" type="button">POST</button></p>
 				<figure><pre><code>API_URL/user/:domain_id</code></pre></figure>			
 				
 				<p>Request <i>(CURL)</i>:</p>
-				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "email=NEW_EMAIL" -F "password=NEW_UNENCRYPTED_PASS" "API_URL/user/DOMAIN_ID"</code></pre></figure>
+				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "email=EMAIL" -F "password=UNENCRYPTED_PASS" "API_URL/user/DOMAIN_ID"</code></pre></figure>
 				
 				<p>Input parameters:</p>
-				<figure><pre><code>domain_id - id of domain
-email - email address of new user
-password - password of new user (clear) it will encrypted</code></pre></figure>
+				<figure><pre><code>domain_id - id of the domain name
+email - email address of the new user
+password - unencrypted password</code></pre></figure>
 				
+				<!-- Change user's password -->
+				<h2 id="change-users-password"><span class="n-sign">#</span> Change user's password</h2>
+				<p>Change the user's password.</p>
+				<p><button class="btn btn-primary" type="button">POST</button></p>
+				<figure><pre><code>API_URL/user-change-password</code></pre></figure>			
 				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "id=USER_ID" -F "password=NEW_UNENCRYPTED_PASS" -F "domain_id=DOMAIN_ID" "API_URL/user-change-password"</code></pre></figure>
+				
+				<p>Input parameters:</p>
+				<figure><pre><code>id - Id of the user
+password - New unencrypted password
+domain_id - id of domain</code></pre></figure>
+				
+				<!-- Generate Let's encrypt certificate -->
+				<h2 id="generate-letsencrypt-certificate"><span class="n-sign">#</span> Generate Letsencrypt certificate</h2>
+				<p>Generate a new Let's Encrypt certificate for a chosen hostname.</p>
+				<p><button class="btn btn-primary" type="button">POST</button></p>
+				<figure><pre><code>API_URL/ssl/letsencrypt/install</code></pre></figure>			
+				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "hostname=example.com" "API_URL/ssl/letsencrypt/install"</code></pre></figure>
+				
+				<p>Input parameters:</p>
+				<figure><pre><code>hostname - domain name for which we will generate a Let's encrypt certificate</code></pre></figure>
 				
 				
 				<!--
