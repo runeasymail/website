@@ -103,12 +103,22 @@
 					<p>Choose from the list of API method.</p>
                     <ul class="list-unstyled list-content">
                         <li><a href="#authorization"><span class="n-sign">#</span> Authorization</a></li>
+						
 						<li><a href="#get-domains"><span class="n-sign">#</span> Get domains</a></li>
+						<li><a href="#export-domain"><span class="n-sign">#</span> Export domain</a></li>						
 						<li><a href="#get-users"><span class="n-sign">#</span> Get users</a></li>
+						
+						<li><a href="#add-dkim"><span class="n-sign">#</span> Add DKIM</a></li>
 						<li><a href="#create-domain-and-email-account"><span class="n-sign">#</span> Create domain and add email account</a></li>
 						<li><a href="#create-user"><span class="n-sign">#</span> Create user</a></li>
 						<li><a href="#change-users-password"><span class="n-sign">#</span> Change user's password</a></li>						
-						<li><a href="#generate-letsencrypt-certificate"><span class="n-sign">#</span> Generate Letsencrypt certificate</a></li>						
+						<li><a href="#generate-letsencrypt-certificate"><span class="n-sign">#</span> Generate Letsencrypt certificate</a></li>	
+						
+						<li><a href="#letsencrypt-get-left-days"><span class="n-sign">#</span> Get left days for Letsencrypt certificate</a></li>						
+						<li><a href="#upload-ssl"><span class="n-sign">#</span> Upload SSL</a></li>		
+						
+						<li><a href="#delete-domain"><span class="n-sign">#</span> Delete domain</a></li>						
+						<li><a href="#delete-user"><span class="n-sign">#</span> Delete user</a></li>						
                     </ul>
                 </div>
 				
@@ -165,6 +175,15 @@ password - string</code></pre></figure>
    ]
 }</code></pre></figure>
 				
+				<!-- Export domains -->
+				<h2 id="export-domain"><span class="n-sign">#</span> Export domain</h2>
+				<p>Export the data corresponding to a domain name in archived file.</p>
+				<p><button class="btn btn-success" type="button">GET</button></p>
+				<figure><pre><code>API_URL/export/domain</code></pre></figure>			
+				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X GET -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "domain=example.com" "API_URL/export/domain"</code></pre></figure>			
+
 				<!-- Get users -->
 				<h2 id="get-users"><span class="n-sign">#</span> Get users</h2>
 				<p>Return all users for a domain with specific id.</p>
@@ -188,6 +207,20 @@ password - string</code></pre></figure>
    ]
 }</code></pre></figure>
 				
+				
+				<!-- Add DKIM -->
+				<h2 id="add-dkim"><span class="n-sign">#</span> Add DKIM</h2>
+				<p>Generate DKIM based on a passed domain name.</p>
+				<p><button class="btn btn-primary" type="button">POST</button></p>
+				<figure><pre><code>API_URL/dkim/add-new-domain</code></pre></figure>			
+				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "domain=example.com" "API_URL/dkim/add-new-domain"</code></pre></figure>
+				
+				<p>Input parameters:</p>
+				<figure><pre><code>domain - string</code></pre></figure>
+
+
 				<!-- Create domain and add email account -->
 				<h2 id="create-domain-and-email-account"><span class="n-sign">#</span> Create domain and add email account</h2>
 				<p>This method will create a new domain and it will add a new email account to it.</p>
@@ -243,6 +276,58 @@ domain_id - id of domain</code></pre></figure>
 				<p>Input parameters:</p>
 				<figure><pre><code>hostname - domain name for which we will generate a Let's encrypt certificate</code></pre></figure>
 				
+				
+				<!-- Get left days for Letsencrypt certificate -->
+				<h2 id="letsencrypt-get-left-days"><span class="n-sign">#</span> Get left days for Letsencrypt certificate</h2>
+				<p>Get the days left before the expiration of the Letsencrypt certificate.</p>
+				<p><button class="btn btn-primary" type="button">POST</button></p>
+				<figure><pre><code>API_URL/ssl/get-left-days</code></pre></figure>			
+				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "hostname=example.com" "API_URL/ssl/get-left-days"</code></pre></figure>
+				
+				<p>Input parameters:</p>
+				<figure><pre><code>hostname - domain name for which we will make the check</code></pre></figure>
+				
+				
+				<!-- Upload SSL -->
+				<h2 id="upload-ssl"><span class="n-sign">#</span> Upload SSL</h2>
+				<p>Upload your own SSL certificate.</p>
+				<p><button class="btn btn-primary" type="button">POST</button></p>
+				<figure><pre><code>API_URL/ssl/upload</code></pre></figure>			
+				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X POST -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" "API_URL/ssl/upload"</code></pre></figure>
+				
+				<p>Input parameters:</p>
+				<figure><pre><code>ssl_certificate - SSL certificate</code></pre></figure>
+				<figure><pre><code>ssl_certificate_key - SSL certificate key</code></pre></figure>
+				
+				
+				<!-- Delete domain -->
+				<h2 id="delete-domain"><span class="n-sign">#</span> Delete domain</h2>
+				<p>Delete a chosen domain.</p>
+				<p><button class="btn btn-danger" type="button">DELETE</button></p>
+				<figure><pre><code>API_URL/domain</code></pre></figure>			
+				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X DELETE -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "domain=example.com" "API_URL/domain"</code></pre></figure>
+				
+				<p>Input parameters:</p>
+				<figure><pre><code>domain - domain name which will be deleted</code></pre></figure>
+				
+				
+				<!-- Delete user -->
+				<h2 id="delete-user"><span class="n-sign">#</span> Delete user</h2>
+				<p>Delete a chosen user.</p>
+				<p><button class="btn btn-danger" type="button">DELETE</button></p>
+				<figure><pre><code>API_URL/users</code></pre></figure>			
+				
+				<p>Request <i>(CURL)</i>:</p>
+				<figure><pre><code>curl -X DELETE -H "Auth-token: TOKEN" -H "Cache-Control: no-cache" -F "email=someemail@example.com" "API_URL/users"</code></pre></figure>
+				
+				<p>Input parameters:</p>
+				<figure><pre><code>email - email address corresponding to the user who will be deleted</code></pre></figure>
 				
 				<!--
 				<figure><pre><code>...</code></pre></figure>
