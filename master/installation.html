@@ -102,14 +102,15 @@
                     <ul class="list-unstyled list-content">
                         <li><a href="#introduction"><span class="n-sign">#</span> Introduction</a></li>
 						<li><a href="#server-requirements"><span class="n-sign">#</span> Server Requirements</a></li>
-						<li><a href="#prepare-docker"><span class="n-sign">#</span> Install</a></li>
+						<li><a href="#install"><span class="n-sign">#</span> Install</a></li>
 						<li><a href="#configuration"><span class="n-sign">#</span> Configuration</a></li>
                         <li>
 							<ol><a href="#mx-record"><span class="n-sign">#</span> MX record</a></ol>
                             <ol><a href="#cname-records"><span class="n-sign">#</span> CNAME records</a></ol>                            
 							<ol><a href="#spf-record"><span class="n-sign">#</span> SPF record</a></ol>                                 
+							<ol><a href="#prt-record"><span class="n-sign">#</span> PRT record</a></ol>                                 
                         </li>
-						<li><a href="#add-email-accounts"><span class="n-sign">#</span> Add email accounts</a></li>
+						<li><a href="#add-email-accounts"><span class="n-sign">#</span> Add email accounts and use the API</a></li>
                     </ul>
                 </div>
 				
@@ -155,11 +156,20 @@ IP address: IP_ADDRESS_OF_THE_MAIL_SERVER</code></pre></figure>
 					<li>Any type of machine with Docker.</li>
 				</ul>
 				
-				<h2 id="prepare-docker"><span class="n-sign">#</span> Install</h2>
-				<p>There are cases when we may want to build the mail server on Docker. To do so, follow the steps below.</p>
+				<h2 id="install"><span class="n-sign">#</span> Install</h2>				
 				<p>Install Docker if you still don't have it on your machine. For further information check <a target="_blank" rel="nofollow" href="https://docs.docker.com/engine/installation/">Docker installation</a>.</p>
 				<p>We will use a docker image of Ubuntu 16.04. Go to the terminal of your machine and execute the following command <i>(read below first)</i>:</p>
 				<figure><pre><code>docker run -itd -p=110:110 -p=25:25 -p=995:995 -p=80:80 -p=443:443 -p=587:587 -p=993:993 -p=143:143 -p=465:465 -h "<span class="red">mail.example.com</span>" --name="easymail" easymail/easymail:v1.0.7 /bin/sh -c "bash /opt/easymail/post_install.sh <span class="red">mail.example.com</span>; exec /bin/bash" </code></pre></figure>
+				
+				<p>When the installation completes, attach to the container with the help of:</p>
+				<figure><pre><code>docker attach ID-OF-THE-CONTAINTER</code></pre></figure>
+				<p>and go to the directory below and open the config file:</p>
+				<figure><pre><code>cd /opt/easymail/
+apt-get install nano -Y				
+nano config.ini</code></pre></figure>
+				<p>In this file, you will find the credentials which you can use to access your Web Interface, API, etc.</p>
+				
+				<h2 id="configuration"><span class="n-sign">#</span> Configuration</h2>	
 				
 				<h3 id="mx-record">MX record</h3>
 				<p>Steps:</p>
@@ -205,6 +215,9 @@ Text: "v=spf1 a:<span class="red">mail.example.com</span> ~all"</code></pre></fi
 				the DNS A record of the mail server <span class="red">mail.example.com</span>, to send emails. If somebody else tries to send emails on behalf 
 				of <span class="red">example.com</span> from a different server, this server most probably will go to the spam filters and permanently blocked.</p>
 				
+				<h3 id="prt-record">PRT record</h3>
+				<p>It is a good idea to consider the configuration of the PRT record because there are SPAM filters which take this configuration into account.</p>
+				
 				
 							
 				<h2 id="roundcube"><span class="n-sign">#</span> RoundCube</h2>
@@ -212,11 +225,11 @@ Text: "v=spf1 a:<span class="red">mail.example.com</span> ~all"</code></pre></fi
 				<figure><pre><code><span class="red">mail.example.com</span>:443</code></pre></figure>
 				<p>or</p>
 				<figure><pre><code>IP_ADDRESS_OF_THE_MAIL_SERVER:443</code></pre></figure>
-				<p>Of course, you will need an email account to log in. Continue reading for further information how to add email accounts.</p>
+				<p>In order to log in, use the credentials from config.ini - read chapter <a href="#install">"Install"</a>.</p>
 				<p>When you access your email account with RoundCube, you can change your password from “Settings” -> “Password”.</p>
 				
-				<h2 id="add-email-accounts"><span class="n-sign">#</span> Add email accounts</h2>
-				<p>If you want to add new email account you can <a href="/master/api">use the API</a>.</p>
+				<h2 id="add-email-accounts"><span class="n-sign">#</span> Add email accounts and use the API</h2>
+				<p>If you want to add new email account, declate DKIM record, add SSL certificates, etc., you can <a href="/master/api">use the API</a>.</p>
 	
 
 				<br /><br /><br />
