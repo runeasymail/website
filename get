@@ -18,7 +18,7 @@ docker run \
   -p=993:993 \
   -p=143:143 \
   -p=465:465 \
-  -h "$EASYMAIL_HOSTNAME" \
+  -h="$EASYMAIL_HOSTNAME" \
   --name="easymail" \
   easymail/easymail:v1.0.7 /bin/sh -c "bash /opt/easymail/post_install.sh $EASYMAIL_HOSTNAME; exec /bin/bash"
  
