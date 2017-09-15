@@ -3,6 +3,10 @@
 
 export EASYMAIL_HOSTNAME=$E
 
+# install docker
+wget -qO- https://get.docker.com/ | sh
+
+# run the easymail container
 docker run \
   -itd \
   -p=110:110 \
