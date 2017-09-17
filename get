@@ -6,6 +6,9 @@ export EASYMAIL_HOSTNAME=$E
 # install docker
 wget -qO- https://get.docker.com/ | sh
 
+# create email folder
+mkdir -p /var/mail/vhosts/
+
 # run the easymail container
 docker run \
   -itd \
@@ -18,8 +21,11 @@ docker run \
   -p=993:993 \
   -p=143:143 \
   -p=465:465 \
+  -v /var/mail/vhosts/:/var/mail/vhosts/ \
   -h="$EASYMAIL_HOSTNAME" \
   --name="easymail" \
   easymail/easymail:v1.0.10 /bin/sh -c "bash /opt/easymail/post_install.sh $EASYMAIL_HOSTNAME; exec /bin/bash"
  
 docker exec easymail cat /opt/easymail/config.ini
+
+
