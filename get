@@ -24,7 +24,7 @@ docker run \
   -v /var/mail/vhosts/:/var/mail/vhosts/ \
   -h="$EASYMAIL_HOSTNAME" \
   --name="easymail" \
-  easymail/easymail:v1.0.14 /bin/sh -c "bash /opt/easymail/post_install.sh $EASYMAIL_HOSTNAME; exec /bin/bash"
+  easymail/easymail:v1.0.15 /bin/sh -c "bash /opt/easymail/post_install.sh $EASYMAIL_HOSTNAME; exec /bin/bash"
 
 sleep 10 & docker exec easymail cat /opt/easymail/config.ini
 
