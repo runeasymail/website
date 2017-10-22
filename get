@@ -23,7 +23,7 @@ docker run \
   -p=465:465 \
   -v /opt/easymail/data/dovecot/:/var/mail/vhosts/ \
   -v /opt/easymail/data/mysql/:/opt/easymail/data/mysql/ \
-  -v /var/log/easymail/:/var/log/easymail/ \
+  -v /var/log/:/var/log/easymail/ \
   -h="$EASYMAIL_HOSTNAME" \
   --name="easymail" \
   easymail/easymail:v1.0.18 /bin/sh -c "bash /opt/easymail/post_install.sh; exec /bin/bash"
