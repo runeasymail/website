@@ -7,7 +7,7 @@ export EASYMAIL_HOSTNAME=$E
 wget -qO- https://get.docker.com/ | sh
 
 # create a directory for payload
-mkdir -p /opt/easymail/data/{mysql,dovecot}
+mkdir -p /opt/easymail/data/{mysql,dovecot,opendkim}
 
 # run the easymail container
 docker run \
@@ -23,6 +23,7 @@ docker run \
   -p=465:465 \
   -v /opt/easymail/data/dovecot/:/var/mail/vhosts/ \
   -v /opt/easymail/data/mysql/:/opt/easymail/data/mysql/ \
+  -v /opt/easymail/data/opendkim/:/etc/opendkim/ \
   -v /var/log/easymail/:/var/log/ \
   -h="$EASYMAIL_HOSTNAME" \
   --name="easymail" \
