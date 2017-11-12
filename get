@@ -27,7 +27,7 @@ docker run \
   -v /opt/easymail/data/ssl/:/opt/easymail/data/ssl/ \
   -h="$EASYMAIL_HOSTNAME" \
   --name="easymail" \
-  easymail/easymail:v1.0.20 /bin/sh -c "bash /opt/easymail/post_install.sh; exec /bin/bash"
+  easymail/easymail:v1.0.21 /bin/sh -c "bash /opt/easymail/post_install.sh; exec /bin/bash"
 
 sleep 10 && docker exec easymail cat /opt/easymail/config.ini
 
