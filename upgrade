@@ -1,0 +1,35 @@
+# In order to run it, copy the folloing code and paste it in your terminal
+# export E="yourdomain.com" && wget -qO- https://www.runeasymail.com/upgrade | sh
+
+export EASYMAIL_HOSTNAME=$E
+
+# stop current easymail
+docker exec easymail bash /opt/easymail/exportDb.sh
+docker exec easymail service mysql stop
+docker stop easymail
+docker rename easymail-previous
+
+docker run \
+  -itd \
+  -p=110:110 \
+  -p=25:25 \
+  -p=995:995 \
+  -p=80:80 \
+  -p=443:443 \
+  -p=587:587 \
+  -p=993:993 \
+  -p=143:143 \
+  -p=465:465 \
+  -v /opt/easymail/data/dovecot/:/var/mail/vhosts/ \
+  -v /opt/easymail/data/opendkim/:/etc/opendkim/ \
+  -v /opt/easymail/data/mysql/:/opt/easymail/data/mysql/ \
+  -v /opt/easymail/data/ssl/:/opt/easymail/data/ssl/ \
+  -h="$EASYMAIL_HOSTNAME" \
+  --name="easymail" \
+  easymail/easymail:v1.0.23 /bin/sh -c "bash /opt/easymail/post_install.sh; exec /bin/bash"
+  
+  sleep 10 && docker exec easymail cat /opt/easymail/config.ini
+  
+  docker exec easymail bash /opt/easymail/importDb.sh
+  
+  
