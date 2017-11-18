@@ -9,6 +9,8 @@ wget -qO- https://get.docker.com/ | sh
 # create a directory for payload
 mkdir -p /opt/easymail/data/{mysql,dovecot,opendkim,ssl}
 
+export INSTALL_VERSION="v1.0.23"
+
 # run the easymail container
 docker run \
   -itd \
@@ -27,7 +29,7 @@ docker run \
   -v /opt/easymail/data/ssl/:/opt/easymail/data/ssl/ \
   -h="$EASYMAIL_HOSTNAME" \
   --name="easymail" \
-  easymail/easymail:v1.0.23 /bin/sh -c "bash /opt/easymail/post_install.sh; exec /bin/bash"
+  easymail/easymail:$INSTALL_VERSION /bin/sh -c "bash /opt/easymail/post_install.sh; exec /bin/bash"
 
 sleep 10 && docker exec easymail cat /opt/easymail/config.ini
 
